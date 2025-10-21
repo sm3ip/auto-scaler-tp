@@ -1,0 +1,35 @@
+# XXXXXX/YYYYYY is your username/password in https://hub.docker.com/
+# kubectl create -f k8-tp-04-busy-box-deployment.yaml
+# kubelctl get deployments
+# kubelctl get pods
+# kubectl scale --replicas=5 -f k8-tp-04-busy-box-deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tp-04-busy-box-deployment
+  namespace: default
+  labels:
+    app: tp-04-busy-box-deployment
+spec:
+  selector:
+    matchLabels:
+      app: tp-04-busy-box-deployment
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: tp-04-busy-box-deployment
+    spec:
+      containers:
+        - name: tp-04-busy-box-deployment
+          image: smeip/midl-tp-04-busy-box:v1
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "250m"
+          ports:
+            - name: nodejs-port
+              containerPort: 3000
+      restartPolicy: Always
