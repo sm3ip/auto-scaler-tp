@@ -6,7 +6,7 @@ let RequestInterval
 let NumberOfReplicas
 let NbOfPoints
 
-var myArgs = process.argv.slice(3)
+var myArgs = process.argv.slice(2)
 if (myArgs[0] == null) {
     console.log('Please provide NumberOfReplicas and RequestInterval')
     console.log(' ==> node test-load-generator.js $RequestInterval $NumReplicas')

@@ -43,6 +43,7 @@ npm init --yes
 npm install express ip axios colors fs child_process
 
 echo '============= LOG : do profiling ============='
+chmod u+x main-load-profiler.sh
 ./main-load-profiler.sh $1
 
 #todo launch profiler with number of points arg
