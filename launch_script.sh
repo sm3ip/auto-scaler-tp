@@ -44,7 +44,11 @@ npm install express ip axios colors fs child_process
 
 echo '============= LOG : do profiling ============='
 chmod u+x main-load-profiler.sh
+node main-load-generator.js &
+sleep 5
 ./main-load-profiler.sh $1
+sleep 10
+rm dataForGraph.json
 
 #todo launch profiler with number of points arg
 #arrange folders so that everything is at the same place
@@ -52,8 +56,6 @@ chmod u+x main-load-profiler.sh
 
 
 echo '============= LOG : time to launch js files ============='
-node main-load-generator.js &
-sleep 5
 echo '============= LOG : load gen launched ============='
 node main-auto-scaler.js &
 sleep 5

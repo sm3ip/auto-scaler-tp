@@ -5,6 +5,7 @@ const urlLoadGenerator = 'http://localhost:4000/json'
 
 let RequestInterval
 let TargetDelay
+let nbPoint
 
 var myArgs = process.argv.slice(2)
 if (myArgs[0] == null) {
@@ -13,8 +14,10 @@ if (myArgs[0] == null) {
 } else {
     RequestInterval = myArgs[0]
     TargetDelay = myArgs[1]
+    nbPoint = myArgs[2]
+    
 
-    console.log(`Run test for RequestInterval: ${RequestInterval} to reach TargetDelay: ${TargetDelay}`)
+    console.log(`Run test for RequestInterval: ${RequestInterval} to reach TargetDelay: ${TargetDelay} and nb points is ${nbPoint}`)
 }
 
 
@@ -49,7 +52,7 @@ setTimeout(() => {
         NodeCommand: 'GenerateLoad',
         Duration: 30000, //10000ms = 10s
         Interval: RequestInterval, // 100 = 100 ms
-        NumberOfPoints: 2950,
+        NumberOfPoints: nbPoint,
         TargetDelay: TargetDelay
     })
 
