@@ -46,8 +46,7 @@ sendAxiosPost(urlAutoScaler, {
     NodeCommand: 'BuildLookupTable'
 })
 
-setTimeout(() => {
-    sendAxiosPost(urlLoadGenerator, {
+setTimeout(() => sendAxiosPost(urlLoadGenerator, {
         MessageType: 'Command',
         NodeCommand: 'GenerateLoad',
         Duration: 30000, //10000ms = 10s
@@ -75,4 +74,4 @@ setTimeout(() => {
         TotalDelay: TargetDelay
     })
 
-}, 5000)
+}, 50000)
