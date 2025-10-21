@@ -54,6 +54,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/json', (req, res) => {
+    let dataForGraph = []
     let ans = ""
     let t1, t2, t3
     let x1, x2, x3
@@ -117,13 +118,19 @@ app.post('/json', (req, res) => {
                         
                                 x3 = `TotalDelay: ${x4}, NodeIP: ${nodeIP} timer :${t2 - t1}`
                                 debug = execSync(`kubectl get pods`).toString()
-                                console.log(debug)
+                                //console.log(debug)
                                 
                                   dataForGraph.push({
                                  'TotalDelay:': x4,
                                  'timer': t2 - t1,
                                  'nbReplica': debug})
-                                fs.writeFileSync('dataForGraph.json', JSON.stringify(dataForGraph, null, 4))
+                                if(req.body['TypeExperiment'] == "autoScale"){
+                                    fs.writeFileSync('dataForGraph.json', JSON.stringify(dataForGraph, null, 4))
+                                }
+                                else if(req.body['TypeExperiment'] == "NOautoScale")
+                                    fs.writeFileSync('dataForGraphwithoutAutoSclaling.json', JSON.stringify(dataForGraph, null, 4))
+
+                                
                                 if (x4 <= req.body['TargetDelay']) {
                                     console.log(colors.green(x3))
                                 } else if (x4 <= req.body['TargetDelay'] * 1.5) {

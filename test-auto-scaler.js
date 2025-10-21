@@ -53,7 +53,19 @@ setTimeout(() => {
         Duration: 30000, //10000ms = 10s
         Interval: RequestInterval, // 100 = 100 ms
         NumberOfPoints: nbPoint,
-        TargetDelay: TargetDelay
+        TargetDelay: TargetDelay,
+        TypeExperiment: "NOautoScale"
+    }),5000)
+
+setTimeout(() => {
+    sendAxiosPost(urlLoadGenerator, {
+        MessageType: 'Command',
+        NodeCommand: 'GenerateLoad',
+        Duration: 30000, //10000ms = 10s
+        Interval: RequestInterval, // 100 = 100 ms
+        NumberOfPoints: nbPoint,
+        TargetDelay: TargetDelay,
+        TypeExperiment: "autoScale"
     })
 
     sendAxiosPost(urlAutoScaler, {

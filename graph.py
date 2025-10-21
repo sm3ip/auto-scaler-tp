@@ -1,6 +1,7 @@
 #lecture du .json
 import json
 import matplotlib.pyplot as plt
+import subprocess
 
 #dataForGraphwithoutAusclaling
 
@@ -12,14 +13,15 @@ def parseNumberOfPod5(pods : str):
 with open("dataForGraph.json", "r") as f:
  doc = json.loads(f.read())
 f.close()
-print(doc)
 
 
-print(doc[0]["TotalDelay:"])
+with open("dataForGraphwithoutAutoSclaling.json", "r") as f:
+ doc2 = json.loads(f.read())
+f.close()
 
-print(len(doc))
-
-#traitement du json
+result = subprocess.run(["echo", "Hello, World!"], capture_output=True, text=True)
+print(result.stdout)
+#traitement du json avec autoscaling
 Ltimer = []
 Lreplica = []
 LTotalDelay = []
@@ -42,32 +44,72 @@ while i < len(doc):
         i+=1
     print(i)
 
+#traitement du json avec sans autoscaling
+#traitement du json avec autoscaling
+Ltimer2 = []
+Lreplica2 = []
+LTotalDelay2 = []
+totalDelay2 = 0
+i=0
+while i < len(doc2):
+    timer = doc2[i]["timer"]
+    if timer not in Ltimer2:
+        Ltimer2.append(timer/1000)
+        podsParsing = parseNumberOfPod5(doc2[i]["nbReplica"])
+        Lreplica2.append(podsParsing)
+        j=0
+        while i < len(doc2) and timer == doc2[i]["timer"] :
+            totalDelay += doc2[i]["TotalDelay:"]
+            j+=1
+            i+=1
+        LTotalDelay2.append(totalDelay/j)
+        totalDelay = 0
+    else:
+        i+=1
 
 print(Lreplica)
 print(Ltimer)
 print(LTotalDelay)
 
+print(Lreplica2)
+print(Ltimer2)
+print(LTotalDelay2)
+
+
 print(len(Lreplica))
 print(len(Ltimer))
 print(len(LTotalDelay))
 
-plt.subplots(figsize=(7, 6))
+plt.figure(figsize=(7, 6))
 plt.grid()
-plt.title("Évolution du totalDelay d'exécution au cours du temps avec\n requestInterval = 10ms et TaretDelay = 25ms\n Jobid = 292241")
+plt.title("Évolution du totalDelay d'exécution au cours du temps avec\n requestInterval = 10ms et TargetDelay = 25ms")
 plt.xlabel("temps en Seconde")
 plt.ylabel("totalDelay en milliSeconds")
 plt.plot(Ltimer, LTotalDelay)
-plt.savefig("graphTotalDelayEconome.png")
+plt.savefig("graphTotalDelaytroll.png")
 plt.show()
-plt.close()
+#plt.close()
 
-plt.subplots(figsize=(7, 6))
+plt.figure(figsize=(7, 6))
 plt.grid()
-plt.title("Évolution du nombre réplica au cours du temps avec\n requestInterval = 10ms et TaretDelay = 25ms\n Jobid = 292241")
+plt.title("Évolution du totalDelay d'exécution au cours du temps\n requestInterval = 10ms et TargetDelay = 25ms")
+plt.xlabel("temps en Seconde")
+plt.ylabel("totalDelay en milliSeconds")
+plt.plot(Ltimer, LTotalDelay, label= "avec autoscaling")
+plt.plot(Ltimer2, LTotalDelay2,label= "sans autoscaling")
+plt.legend()
+plt.savefig("graphTotalDelayCamparaisontroll.png")
+plt.show()
+#plt.close()
+
+
+plt.figure(figsize=(7, 6))
+plt.grid()
+plt.title("Évolution du nombre réplica au cours du temps avec\n requestInterval = 10ms et TargetDelay = 25ms")
 plt.xlabel("temps en Seconde")
 plt.ylabel("nombre de réplica")
-
 plt.plot(Ltimer, Lreplica)
-plt.savefig("graphreplicaEconome.png")
+plt.savefig("graphreplicatroll.png")
 plt.show()
+#plt.close()
 
