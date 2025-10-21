@@ -20,7 +20,6 @@ with open("dataForGraphwithoutAutoSclaling.json", "r") as f:
 f.close()
 
 result = subprocess.run(["echo", "Hello, World!"], capture_output=True, text=True)
-print(result.stdout)
 #traitement du json avec autoscaling
 Ltimer = []
 Lreplica = []
@@ -42,7 +41,7 @@ while i < len(doc):
         totalDelay = 0
     else:
         i+=1
-    print(i)
+    
 
 #traitement du json avec sans autoscaling
 #traitement du json avec autoscaling
@@ -67,18 +66,7 @@ while i < len(doc2):
     else:
         i+=1
 
-print(Lreplica)
-print(Ltimer)
-print(LTotalDelay)
 
-print(Lreplica2)
-print(Ltimer2)
-print(LTotalDelay2)
-
-
-print(len(Lreplica))
-print(len(Ltimer))
-print(len(LTotalDelay))
 
 plt.figure(figsize=(7, 6))
 plt.grid()
