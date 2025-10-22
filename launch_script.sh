@@ -50,11 +50,6 @@ sleep 5
 sleep 10
 rm dataForGraph.json
 
-#todo launch profiler with number of points arg
-#arrange folders so that everything is at the same place
-
-
-
 echo '============= LOG : time to launch js files ============='
 echo '============= LOG : load gen launched ============='
 node main-auto-scaler.js &
@@ -65,6 +60,10 @@ echo '============= LOG : WAITING FOR DATA =============' $(date)
 sleep 40
 echo '============= LOG : Creating graphs =============' $(date)
 python graph.py
-echo '============= LOG : FINISHED ============='
+echo '============= LOG : Graphs created ============='
 
-
+kubectl delete --all services
+kubectl delete --all deployments
+kubectl delete --all pods
+echo '============= LOG : Deployments deleted ============='
+echo '============= LOG : Script Done ============='
